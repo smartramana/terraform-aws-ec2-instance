@@ -3,10 +3,10 @@ variable "aws_region" {
   type        = string
 }
 
-variable "aws_arn_id" {
-  description = "AWS ARN Role"
-  type        = string
-}
+#variable "aws_arn_id" {
+#  description = "AWS ARN Role"
+#  type        = string
+#}
 
 variable "instance_type" {
   description = "Instance Type"
