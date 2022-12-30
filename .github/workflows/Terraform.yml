@@ -8,7 +8,7 @@ on:
 
 jobs:
   Publish_Terraform_Private_Module:
-    runs-on:  general-use
+    runs-on:  ubuntu-latest
     name: Publish a terraform private module versions
     steps:
       # To use this repository's private action,
@@ -20,7 +20,7 @@ jobs:
   release:
     name: Release
     needs: [Publish_Terraform_Private_Module]
-    runs-on:  general-use
+    runs-on:  ubuntu-latest
 
     steps:
       - name: Checkout
@@ -54,7 +54,7 @@ jobs:
   TFC_Module:
     name: TFC_Module
     needs: [release]
-    runs-on:  general-use
+    runs-on:  ubuntu-latest
 
     steps:
       - name: Checkout
