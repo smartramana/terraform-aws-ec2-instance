@@ -72,7 +72,7 @@ jobs:
         id: hello
         uses: ./
         with:
-          organization: "smartramana"
+          organization: "smartramanan"
           moduleName: "aws_ec2_testmodule"
           provider: "aws"
           version: "${{ github.run_number }}.0.0"
