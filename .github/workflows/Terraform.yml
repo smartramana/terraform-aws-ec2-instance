@@ -1,0 +1,80 @@
+name: Terraform_Cloud_Registry_AWS
+
+on:
+  push:
+    branches:
+      - qa
+  workflow_dispatch:
+
+jobs:
+  Publish_Terraform_Private_Module:
+    runs-on:  general-use
+    name: Publish a terraform private module versions
+    steps:
+      # To use this repository's private action,
+      # you must check out the repository
+      - name: Checkout
+        uses: actions/checkout@v2
+
+
+  release:
+    name: Release
+    needs: [Publish_Terraform_Private_Module]
+    runs-on:  general-use
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Extract version from branch name (for release branches)
+        run: |
+          BRANCH_NAME="${{ github.event.pull_request.head.ref }}"
+          VERSION=${BRANCH_NAME#release/}
+          echo "RELEASE_VERSION=$VERSION" >> $GITHUB_ENV
+      - name: Update the ${{ env.TAG_NAME }} tag
+        id: create-new-release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ github.run_number }}
+          release_name: Release ${{ github.run_number }}
+
+      - name: Compress module
+        run: |
+          tar -zcvf v${{ github.run_number }}.tar.gz module
+
+      - name: Step 3 - Use the Upload Artifact GitHub Action
+        uses: actions/upload-artifact@v2
+        with: 
+          name: Artifact-v${{ github.run_number }}
+          path: "v${{ github.run_number }}.tar.gz"
+
+
+  TFC_Module:
+    name: TFC_Module
+    needs: [release]
+    runs-on:  general-use
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Compress module
+        run: |
+          tar -zcvf v${{ github.run_number }}.tar.gz module
+          tar -zcvf module.tar.gz module
+
+      - name: Display structure of downloaded files
+        run: ls -R; pwd
+
+      - name: Publish a Terraform  Private Module
+        id: hello
+        uses: ./
+        with:
+          organization: "smartramana"
+          moduleName: "aws_ec2_testmodule"
+          provider: "aws"
+          version: "${{ github.run_number }}.0.0"
+        env:
+          TF_CLOUD_TOKEN: ${{ secrets.TERRAFORM_CLOUD_TOKEN }}

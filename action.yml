@@ -1,0 +1,24 @@
+# action.yml
+name: "Publish Terraform Module"
+description: "it pusblishes a private terraform module withoout VCS"
+inputs:
+  organization:
+    description: "Terraform organization name"
+    required: true
+  moduleName:
+    description: "Terraform module name"
+    required: true
+  provider:
+    description: "Terraform provider"
+    required: true
+  version:
+    description: "Module Version"
+    required: true
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  args:
+    - ${{ inputs.organization }}
+    - ${{ inputs.moduleName }}
+    - ${{ inputs.provider }}
+    - ${{ inputs.version }}
