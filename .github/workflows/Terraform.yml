@@ -62,8 +62,8 @@ jobs:
 
       - name: Compress module
         run: |
-          tar -zcvf v${{ github.run_number }}.tar.gz module
-          tar -zcvf module.tar.gz module
+          tar -zcvf v${{ github.run_number }}.tar.gz module/*
+          tar -zcvf module.tar.gz module/*
 
       - name: Display structure of downloaded files
         run: ls -R; pwd
