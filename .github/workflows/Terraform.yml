@@ -62,7 +62,9 @@ jobs:
 
       - name: Compress module
         run: |
-          tar zcvf module.tar.gz module/*
+          cd module
+          tar zcvf module.tar.gz *
+          mv module.tar.gz ../
 
       - name: Display structure of downloaded files
         run: ls -R; pwd
