@@ -54,7 +54,7 @@ variable "project_dud" {
 }
 
 variable "project_accenture_ru" {
-  description = "Supported by Accenture."
+  description = "Supported by Accentures."
   type        = string
 }
 
