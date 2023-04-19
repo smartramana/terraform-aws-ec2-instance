@@ -1,4 +1,5 @@
 name: Checkout
+on:
   push:
     branches:
       - main
