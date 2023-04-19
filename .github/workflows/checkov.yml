@@ -11,8 +11,10 @@ jobs:
         id: checkov
         uses: bridgecrewio/checkov-action@master
         with:
-          directory: .
-          soft_fail: true
+          directory: module/
+          soft_fail: false
+          framework: terraform
+          quiet: true
           download_external_modules: true
           github_pat: ${{ secrets.GH_PAT }}
         env:
