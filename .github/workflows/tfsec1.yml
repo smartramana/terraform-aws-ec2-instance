@@ -13,6 +13,5 @@ jobs:
       - name: tfsec
         uses: tfsec/tfsec-pr-commenter-action@main
         with:
-          tfsec_args: --soft-fail
           tfsec_formats: sarif,csv
           github_token: ${{ secrets.GITHUB_TOKEN }}
