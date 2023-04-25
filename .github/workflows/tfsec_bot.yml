@@ -1,25 +1,21 @@
-name: Tfsec PR Bot
-
-on:
-  pull_request:
-    types: [opened, reopened, synchronize]
-
+name: tfsec
+on: [pull_request]
 jobs:
-  tfsec-pr-bot:
-    runs-on: ubuntu-latest
+  tfsec:
+    name: runner / tfsec
+    runs-on: ubuntu-latest # Windows and macOS are also supported
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    - name: Install Tfsec
-      run: |
-        curl -Lso tfsec https://github.com/aquasecurity/tfsec/releases/latest/download/tfsec-linux-amd64
-        chmod +x tfsec
-        sudo mv tfsec /usr/local/bin/
-    - name: Run Tfsec
-      run: |
-        tfsec --format=json ./ | tee tfsec-results.json
-    - name: Add Tfsec Review
-      uses: Wizer-AI/tfsec-pr-bot@main
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        report_path: tfsec-results.json
+      - name: Clone repo
+        uses: actions/checkout@v2
+      - name: Run tfsec with reviewdog output on the PR
+        uses: reviewdog/action-tfsec@master
+        with:
+          github_token: ${{ secrets.github_token }}
+          working_directory: my_directory # Change working directory
+          level: info # Get more output from reviewdog
+          reporter: github-pr-review # Change reviewdog reporter
+          filter_mode: nofilter # Check all files, not just the diff
+          fail_on_error: true # Fail action if errors are found
+          flags: -tee # Add debug flag to reviewdog
+          tfsec_flags: "" # Optional
+
