@@ -14,6 +14,7 @@ resource "aws_instance" "ec2" {
     volume_type           = var.root_volume_type
     volume_size           = var.root_volume_size
     delete_on_termination = true
+    encrypted = true
   }
 
   tags = local.tags
