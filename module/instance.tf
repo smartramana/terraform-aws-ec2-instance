@@ -7,6 +7,10 @@ resource "aws_instance" "ec2" {
   monitoring              = false
   disable_api_termination = false
   tenancy                 = "default"
+  metadata_options {
+  http_tokens = "required"
+  }
+  
 
   volume_tags = local.tags
 
@@ -14,6 +18,7 @@ resource "aws_instance" "ec2" {
     volume_type           = var.root_volume_type
     volume_size           = var.root_volume_size
     delete_on_termination = true
+    encrypted = true
   }
 
   tags = local.tags
