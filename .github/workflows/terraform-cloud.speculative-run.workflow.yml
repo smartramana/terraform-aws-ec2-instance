@@ -62,7 +62,7 @@ jobs:
       - uses: hashicorp/tfc-workflows-github/actions/show-run@v1.0.0
         id: run1
         with:
-          run: ${{ steps.plan-output.outputs.run_id }}
+          run: ${{ steps.plan-output.outputs.plan_id }}
 
       - run: |
           echo "Latest Run Status: ${{ steps.run1.outputs.run_status }}"
