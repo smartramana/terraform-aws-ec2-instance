@@ -83,8 +83,8 @@ variable "root_volume_size" {
   type        = string
 }
 
-variable "vpc_security_group_id" {
-  description = "VPC Security Id"
-  type        = list
-}
+# variable "vpc_security_group_id" {
+#   description = "VPC Security Id"
+#   type        = list
+# }
 
