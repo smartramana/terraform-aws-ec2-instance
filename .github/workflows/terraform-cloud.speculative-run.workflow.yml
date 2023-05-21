@@ -58,6 +58,14 @@ jobs:
         id: plan-output
         with:
           plan: ${{ steps.run.outputs.plan_id }}
+          
+      - uses: hashicorp/tfc-workflows-github/actions/show-run@v1.0.0
+        id: run1
+        with:
+          run: ${{ steps.plan-output.outputs.run_id }}
+
+      - run: |
+          echo "Latest Run Status: ${{ steps.run1.outputs.run_status }}"
 
       ## REQUIRED: Workflow permissions: `Read and write permissions`
       - uses: actions/github-script@v6
