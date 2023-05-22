@@ -31,16 +31,17 @@ jobs:
           workspace: ${{ env.TF_WORKSPACE }}
           configuration_version: ${{ steps.upload.outputs.configuration_version_id }}
           
-      - uses: hashicorp/tfc-workflows-github/actions/discard-run@v1.0.0
-        id: discard
-        with:
-          token: ${{ secrets.TERRAFORM_CLOUD_TOKEN }} # recommend to store as repository secret
-          run: ${{ steps.run.outputs.run_id }}
-          comment: "Discarded from GitHub Actions CI"
-
-#       - uses: hashicorp/tfc-workflows-github/actions/apply-run@v1.0.0
-#         id: apply
-# #         if: ${{ fromJSON(steps.create-run.outputs.payload).data.attributes.actions.IsConfirmable }}
+#       - uses: hashicorp/tfc-workflows-github/actions/discard-run@v1.0.0
+#         id: discard
 #         with:
-#           run: ${{ steps.create-run.outputs.run_id }}
-#           comment: "Apply Run from GitHub Actions CI ${{ github.sha }}"
+#           token: ${{ secrets.TERRAFORM_CLOUD_TOKEN }} # recommend to store as repository secret
+#           run: ${{ steps.run.outputs.run_id }}
+#           comment: "Discarded from GitHub Actions CI"
+
+      - uses: hashicorp/tfc-workflows-github/actions/apply-run@v1.0.0
+        id: apply
+#         continue-on-error: true
+        if: ${{ fromJSON(steps.run.outputs.payload).data.attributes.actions.IsConfirmable }}
+        with:
+          run: ${{ steps.create-run.outputs.run_id }}
+          comment: "Apply Run from GitHub Actions CI ${{ github.sha }}"
