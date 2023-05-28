@@ -1,0 +1,30 @@
+name: Terraform_api
+
+on:
+  push:
+    branches:
+      - qa
+  workflow_dispatch:
+
+jobs:
+  Publish_Terraform_Private_Module:
+    runs-on:  ubuntu-latest
+    name: Publish a terraform private module versions
+    steps:
+      # To use this repository's private action,
+      # you must check out the repository
+      - name: Checkout
+        uses: actions/checkout@v2
+        
+      - name: Create tar gz file
+        run: tar --exclude *.terraform* -zcvf build.tar.gz build infrastructure
+
+      - name: Terraform Cloud
+        uses: addresscloud/terraform-cloud-action@v1.0.0
+        with:
+          tfToken: ${{ secrets.TERRAFORM_CLOUD_TOKEN }}
+          tfOrg: 'smartramanan'
+          tfWorkspace: 'aws_gitaction'
+          filePath: './build.tar.gz'
+          identifier: ${{ github.sha }} 
+          
