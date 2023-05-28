@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v2
         
       - name: Create tar gz file
-        run: tar --exclude *.terraform* -zcvf build.tar.gz *
+        run: tar --exclude *.terraform* -zcvf build.tar.gz module
 
       - name: Terraform Cloud
         uses: addresscloud/terraform-cloud-action@v1.0.0
