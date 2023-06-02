@@ -30,14 +30,14 @@ jobs:
         output-method: inject
         git-push: "true"
         
-  TFSEC_security_scan:
-    name: TFSEC_security_scan
-    needs: [TF_Document_Generation]
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-      with:
-        ref: ${{ github.event.pull_request.head.ref }}      
+#   TFSEC_security_scan:
+#     name: TFSEC_security_scan
+#     needs: [TF_Document_Generation]
+#     runs-on: ubuntu-latest
+#     steps:
+#     - uses: actions/checkout@v3
+#       with:
+#         ref: ${{ github.event.pull_request.head.ref }}      
         
     - name: Run tfsec with reviewdog output on the PR
       uses: reviewdog/action-tfsec@master
