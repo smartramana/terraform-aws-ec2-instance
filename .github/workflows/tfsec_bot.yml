@@ -2,7 +2,7 @@ name: tfsec_bot
 on: [pull_request]
 jobs:
   tfsec:
-    name: runner / tfsec
+    name: runner / tfsec_bot
     runs-on: ubuntu-latest # Windows and macOS are also supported
     steps:
       - name: Clone repo
