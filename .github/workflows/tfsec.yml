@@ -4,27 +4,28 @@ on:
     branches:
       - main
   pull_request:
+
+permissions:
+  checks: write
+  pull-requests: write
+
 jobs:
   tfsec:
-    name: tfsec sarif report
+    name: tfsec
     runs-on: ubuntu-latest
-    permissions:
-      actions: read
-      contents: read
-      security-events: write
+
     steps:
       - name: Clone repo
-        uses: actions/checkout@v2
-        with:
-          persist-credentials: false
-
+        uses: actions/checkout@master
       - name: tfsec
-        uses: aquasecurity/tfsec-sarif-action@v0.1.0
+        uses: aquasecurity/tfsec-action@v1.0.3
         with:
-          sarif_file: tfsec.sarif          
+          format: junit
+          additional_args: -O results.xml --include-passed --include-ignored
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          junit_files: "results.xml"
+          check_name: "tfsec Results"
 
-      - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          # Path to SARIF file relative to the root of the repository
-          sarif_file: tfsec.sarif
