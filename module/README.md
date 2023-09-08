@@ -41,7 +41,6 @@ No modules.
 | <a name="input_root_volume_type"></a> [root\_volume\_type](#input\_root\_volume\_type) | Type of Root Volume used | `string` | n/a | yes |
 | <a name="input_subnet_id"></a> [subnet\_id](#input\_subnet\_id) | Subnet ID | `string` | n/a | yes |
 | <a name="input_tfc_ec2_server_name"></a> [tfc\_ec2\_server\_name](#input\_tfc\_ec2\_server\_name) | Owner of this project. | `string` | n/a | yes |
-| <a name="input_vpc_security_group_id"></a> [vpc\_security\_group\_id](#input\_vpc\_security\_group\_id) | VPC Security Id | `list` | n/a | yes |
 
 ## Outputs
 
