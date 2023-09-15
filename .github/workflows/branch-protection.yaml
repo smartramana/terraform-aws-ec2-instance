@@ -17,7 +17,7 @@ jobs:
       - uses: infamous-riddles/branch-guardian@v1
         with: 
           PERSONAL-ACCESS-TOKEN: ${{ secrets.PAT }}
-          BASE-BRANCH-PATTERN: 'master'
+          BASE-BRANCH-PATTERN: 'main'
           REQUIRED-NUMBER-OF-REVIEWERS: 2
           REQUIRED-STATUS-CHECKS: 'build,test'
           REQUIRE-REVIEW-FROM-CODEOWNERS: 'true'
