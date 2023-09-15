@@ -19,7 +19,7 @@ jobs:
           fetch-depth: 1
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Run Branch Protection
-        uses: venh/branch-protection@v1.0.0
+        uses: venh/branch-protection@v1.1.0
         with:
           action: set
           # excludedReposPath: branch-protection/excluded-repos.txt
