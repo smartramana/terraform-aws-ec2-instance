@@ -1,4 +1,4 @@
-- branch: master
+- branch: main
   protection:
     required_status_checks:
       strict: true
