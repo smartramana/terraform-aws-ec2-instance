@@ -8,15 +8,20 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     steps:
-      - name: Produce Output and Run Validation
+      - name: Produce Output
         run: |
-          # Your workflow steps here
-          
-          # Perform validation and set output based on success/failure
-          if [ validation_successful ]; then
-            echo "::set-output name=validation_status::success"
-          else
-            echo "::set-output name=validation_status::failure"
-          fi
+          # Generate the output files or data
+          echo "Hello, World!" > output.txt
+        # Upload the output as an artifact
+        echo "::set-output name=output_path::output.txt"
+        echo "::set-output name=output_data::Hello, World!"
+        echo "::set-output name=validation_required::true"
+      
+      # Upload the output files as artifacts
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: my-artifact
+          path: output.txt
