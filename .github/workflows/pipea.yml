@@ -1,0 +1,22 @@
+name: Pipeline A
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Produce Output and Run Validation
+        run: |
+          # Your workflow steps here
+          
+          # Perform validation and set output based on success/failure
+          if [ validation_successful ]; then
+            echo "::set-output name=validation_status::success"
+          else
+            echo "::set-output name=validation_status::failure"
+          fi
