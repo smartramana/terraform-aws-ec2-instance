@@ -1,0 +1,27 @@
+name: Pipeline B
+
+on:
+  workflow_run:
+    workflows: ["Pipeline A"]
+    types:
+      - completed
+
+jobs:
+  conditional_run:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Check Validation Status
+        run: |
+          # Retrieve the validation status from the output of "Pipeline A"
+          validation_status=$(echo "${{ needs.Pipeline A.outputs.validation_status }}")
+
+          # Check the validation status and decide whether to continue
+          if [ "$validation_status" == "success" ]; then
+            echo "Validation successful, proceeding with Pipeline B"
+          else
+            echo "Validation failed, skipping Pipeline B"
+            exit 0  # Exit successfully to skip subsequent steps
+          fi
+
+      # Add steps for the rest of your "Pipeline B" workflow here
