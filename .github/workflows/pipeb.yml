@@ -7,21 +7,23 @@ on:
       - completed
 
 jobs:
-  conditional_run:
+  validate_output:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Check Validation Status
+      - name: Download Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: my-artifact
+          path: output
+
+      - name: Validate Output
         run: |
-          # Retrieve the validation status from the output of "Pipeline A"
-          validation_status=$(echo "${{ needs.Pipeline A.outputs.validation_status }}")
-
-          # Check the validation status and decide whether to continue
-          if [ "$validation_status" == "success" ]; then
-            echo "Validation successful, proceeding with Pipeline B"
+          # Read and validate the output
+          output_data=$(cat output/output.txt)
+          if [ "$output_data" == "Hello, World!" ]; then
+            echo "Validation successful"
           else
-            echo "Validation failed, skipping Pipeline B"
-            exit 0  # Exit successfully to skip subsequent steps
+            echo "Validation failed"
+            exit 1
           fi
-
-      # Add steps for the rest of your "Pipeline B" workflow here
